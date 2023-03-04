@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 
-import { inject, defineProps } from 'vue';
+import { inject, defineProps, computed } from 'vue';
 
 const props = defineProps({
   rotation: {
@@ -19,14 +19,14 @@ const props = defineProps({
 });
 
 const height: any = inject('contentSize');
-const paddingSize = inject('paddingSize');
+const paddingSize: any = inject('paddingSize');
 
-const style = {
-  top: `${paddingSize}px`,
-  'transform-origin': `center ${height / 2}px`,
+const style = computed(() => ({
+  top: `${paddingSize.value}px`,
+  'transform-origin': `center ${height.value / 2}px`,
   transform: `translate3d(-50%, 0, 0) rotate(${props.rotation || '0deg'})`,
-  'font-size': height * 0.075 + 'px',
-}
+  'font-size': height.value * 0.075 + 'px',
+}))
 </script>
 
 <style>

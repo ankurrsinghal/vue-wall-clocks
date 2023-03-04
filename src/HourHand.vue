@@ -16,12 +16,12 @@ const props = defineProps({
 const contentSize: any = inject('contentSize');
 const paddingSize: any = inject('paddingSize');
 
-const sizeLessThanSecondHand = contentSize*0.2;
+const sizeLessThanSecondHand = computed(() => contentSize.value*0.2);
 
 const style = computed(() => ({
   transform: `rotate(${props.rotation}) translate3d(-50%, 0, 0)`,
-  height: `${contentSize * 0.5 - sizeLessThanSecondHand}px`,
-  top: `${paddingSize + sizeLessThanSecondHand}px`,
+  height: `${contentSize.value * 0.5 - sizeLessThanSecondHand.value}px`,
+  top: `${paddingSize.value + sizeLessThanSecondHand.value}px`,
 }));
 
 </script>

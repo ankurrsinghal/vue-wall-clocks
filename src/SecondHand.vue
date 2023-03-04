@@ -19,8 +19,8 @@ const paddingSize: any = inject('paddingSize');
 
 const style = computed(() => ({
   transform: `rotate(${props.rotation}) translate3d(-50%, 0, 0)`,
-  height: `${contentSize * 0.5}px`,
-  top: `${paddingSize}px`,
+  height: `${contentSize.value * 0.5}px`,
+  top: `${paddingSize.value}px`,
 }));
 
 </script>

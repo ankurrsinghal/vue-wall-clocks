@@ -3,16 +3,16 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue';
+import { inject, computed } from 'vue';
 
 
 const size: any = inject('size');
-const dotSize = size*0.05;
+const dotSize = computed(() => size.value*0.05);
 
-const style = {
-  width: `${dotSize}px`,
-  height: `${dotSize}px`
-}
+const style = computed(() => ({
+  width: `${dotSize.value}px`,
+  height: `${dotSize.value}px`
+}));
 </script>
 
 <style>

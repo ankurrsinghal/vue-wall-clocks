@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 
-import { inject, defineProps, onUpdated, computed } from 'vue';
+import { inject, defineProps, computed } from 'vue';
 
 const props = defineProps({
   rotation: {
@@ -16,12 +16,12 @@ const props = defineProps({
 const contentSize: any = inject('contentSize');
 const paddingSize: any = inject('paddingSize');
 
-const sizeLessThanSecondHand = contentSize*0.1;
+const sizeLessThanSecondHand = computed(() => contentSize.value*0.1);
 
 const style = computed(() => ({
   transform: `rotate(${props.rotation}) translate3d(-50%, 0, 0)`,
-  height: `${contentSize * 0.5 - sizeLessThanSecondHand}px`,
-  top: `${paddingSize + sizeLessThanSecondHand}px`,
+  height: `${contentSize.value * 0.5 - sizeLessThanSecondHand.value}px`,
+  top: `${paddingSize.value + sizeLessThanSecondHand.value}px`,
 }));
 
 </script>

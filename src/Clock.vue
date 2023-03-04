@@ -17,26 +17,30 @@
 </template>
 
 <script setup lang="ts">
-import { provide, ref, useSlots } from "vue";
+import { provide, ref, toRefs, computed } from "vue";
 import MarkerWrapper from "./MarkerWrapper.vue";
 import Motor from "./Motor.vue";
 import { useInterval, useRaf } from "./useInterval";
 
 const props = defineProps({
+  size: {
+    type: Number,
+    default: 300,
+  },
   smooth: {
     type: Boolean,
     default: false
   }
 });
 
-const size = 300;
-const borderSize = size*0.02;
-const paddingSize = size*0.05;
-const finalSize = size - 2 * (borderSize + paddingSize);
+const { size, smooth } = toRefs(props);
+const borderSize = computed(() => size.value*0.02);
+const paddingSize = computed(() => size.value*0.05);
+const finalSize = computed(() => size.value - 2 * (borderSize.value + paddingSize.value));
 
 const currentTime = ref(new Date());
 
-const useAnimation = props.smooth ? useRaf : useInterval;
+const useAnimation = smooth.value ? useRaf : useInterval;
 
 useAnimation(() => {
   currentTime.value = new Date();
@@ -48,11 +52,11 @@ provide("paddingSize", paddingSize);
 provide("contentSize", finalSize);
 provide("currentTime", currentTime);
 
-const style = {
-  border: `${borderSize}px solid black`,
-  width: `${size}px`,
-  height: `${size}px`,
-}
+const style = computed(() => ({
+  border: `${borderSize.value}px solid black`,
+  width: `${size.value}px`,
+  height: `${size.value}px`,
+}))
 
 </script>
 
