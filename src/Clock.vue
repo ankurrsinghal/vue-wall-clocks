@@ -40,9 +40,9 @@ const finalSize = computed(() => size.value - 2 * (borderSize.value + paddingSiz
 
 const currentTime = ref(new Date());
 
-const useAnimation = smooth.value ? useRaf : useInterval;
+const useAnimation = computed(() => smooth.value ? useRaf : useInterval);
 
-useAnimation(() => {
+useAnimation.value(() => {
   currentTime.value = new Date();
 });
 
