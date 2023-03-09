@@ -6,16 +6,17 @@
           <div>
             <ul class="flex space-x-10">
               <li>
-                <a class="hover:underline" href="#">Github</a>
+                <a class="hover:underline" href="https://github.com/ankurrsinghal/vue-wall-clocks"
+                  target="_blank">Github</a>
               </li>
               <li>
-                <a class="hover:underline" href="#">Twitter</a>
+                <a class="hover:underline" href="https://twitter.com/ankurpsinghal" target="_blank">Twitter</a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="container mx-auto">
+      <div class="container mx-auto pb-20">
         <div class="flex justify-between w-full py-40 items-center h-screen">
           <h1 class="text-8xl font-bold leading-tight">
             <span class="block text-secondary">Vue</span>
@@ -28,34 +29,57 @@
             </Clock>
           </div>
         </div>
-        <div class="h-screen">
-          <h1 class="text-4xl font-extralight">Simple Usage</h1>
-          <div class="flex mt-10">
-            <div class="flex-1 bg-slate-50">
-
+        <div class="space-y-40">
+          <div>
+            <h1 class="text-4xl font-extralight">Get Started</h1>
+            <div class="flex mt-10">
+              <div class="flex-1 text-sm border border-black rounded-md px-4 p-2 inline-block">
+                <div v-shiki="getting_started" />
+              </div>
             </div>
-            <div class="flex-1">
-              <Clock :size="200">
-                <LineMarker />
-              </Clock>
+          </div>
+          <div>
+            <h1 class="text-4xl font-extralight">Simple Clock</h1>
+            <div class="flex mt-10">
+              <div class="flex-1 text-sm border border-black rounded-md px-4 flex items-center">
+                <div v-shiki="simple_usage" />
+              </div>
+              <div class="flex-1">
+                <Clock :size="200">
+                  <LineMarker />
+                </Clock>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h1 class="text-4xl font-extralight">Smooth Animation</h1>
+            <div class="flex mt-10">
+              <div class="flex-1 text-sm border border-black rounded-md px-4 flex items-center">
+                <div v-shiki="simple_usage" />
+              </div>
+              <div class="flex-1">
+                <Clock :size="200" smooth>
+                  <LineMarker />
+                </Clock>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h1 class="text-4xl font-extralight">Circular Markers</h1>
+            <div class="flex mt-10">
+              <div class="flex-1 text-sm border border-black rounded-md px-4 flex items-center">
+                <div v-shiki="simple_usage" />
+              </div>
+              <div class="flex-1">
+                <Clock :size="200" smooth>
+                  <CircleMarker />
+                </Clock>
+              </div>
             </div>
           </div>
         </div>
-        <!-- <div class="grid grid-cols-1 md:grid-cols-2 items-center justify-center">
-          <Clock v-slot="props">
-            <RomanMarker :index="props.index" />
-          </Clock>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 items-center justify-center">
-          <Clock smooth v-slot="props">
-            <CircleMarker />
-          </Clock>
-          <Clock v-slot="props">
-            <NumberMarker :index="props.index" />
-          </Clock>
-        </div> -->
       </div>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -65,6 +89,7 @@ import LineMarker from './LineMarker.vue';
 import RomanMarker from './RomanMarker.vue';
 import CircleMarker from './CircleMarker.vue';
 import NumberMarker from './NumberMarker.vue';
+import { simple, getting_started } from './data';
 
 export default {
   name: 'App',
@@ -75,12 +100,34 @@ export default {
     CircleMarker,
     NumberMarker
   },
+  computed: {
+    getting_started() {
+      return getting_started;
+    },
+    simple_usage() {
+      return simple;
+    }
+  },
+  directives: {
+    shiki: {
+      mounted: (el, { value }) => {
+        shiki
+          .getHighlighter({
+            theme: 'vitesse-light'
+          })
+          .then(highlighter => {
+            const code = highlighter.codeToHtml(value, { lang: 'js' })
+            el.innerHTML = code
+          });
+      }
+    }
+  }
 };
 </script>
 
 <style>
 .gradient {
-  background: -webkit-linear-gradient( 120deg, #35495e -80%, #41b883 );
+  background: -webkit-linear-gradient(120deg, #35495e -80%, #41b883);
   -webkit-background-clip: text;
   color: transparent;
 }
